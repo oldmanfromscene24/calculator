@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src=".\javascript.js"></script>
+    <script src=".\javascript.js" defer></script>
     <link rel="stylesheet" href=".\styles.css">
     <title>Calcoolator</title>
 </head>
@@ -28,12 +28,11 @@
             <button id="subtract" class="operators">-</button>
             <button id="multiply" class="operators">*</button>
             <button id="divide" class="operators">/</button>
-            <button id="equals" class="operators">=</button>
-            <button id="clear" class="operators">CLEAR</button>
+            <button id="equals" class="equals">=</button>
+            <button id="clear" class="clear">CLEAR</button>
         </div>
     </div>
-    <div id="display" class =""></div>
-    <script>displayValues()</script>
+    <div id="display"></div>
 </body>
 
 </html>

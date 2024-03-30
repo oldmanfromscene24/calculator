@@ -1,15 +1,25 @@
+let number = null;
+let operator = null;
+let lastPress = null;
+const display = document.getElementById("display");
+// let displayValue = "";
+listener();
+
 function add(a, b) {
   return parseInt(a) + parseInt(b);
 }
 
 function subtract(a, b) {
-  return parseInt(a) / parseInt(b);
+  return parseInt(a) - parseInt(b);
 }
 function multiply(a, b) {
   return parseInt(a) * parseInt(b);
 }
 function divide(a, b) {
-  if (b == 0) return "Divide by Zero";
+  if (b == 0) {
+    clear();
+    return "Divide by Zero";
+  }
   return parseInt(a) / parseInt(b);
 }
 
@@ -26,15 +36,55 @@ function operate(a, b, operator) {
   }
 }
 
-function getValues(e) {
-  const display = document.getElementById("display");
-  if (e.target.className === "numbers") {
-    display.className += e.target.id;
-    display.textContent = display.className;
+function addValues(value) {
+  if ("0" <= lastPress && lastPress <= "9") display.textContent += value;
+  else display.textContent = value;
+}
+
+function addOperator(addedOperator) {
+  if (display.textContent !== "" && display.textContent!== "Divide by Zero") {
+    if (number === null) {
+      number = display.textContent;
+      display.textContent = addedOperator;
+    } else {
+      display.textContent = operate(number, display.textContent, operator);
+      number = display.textContent;
+    }
+    operator = addedOperator;
   }
 }
 
-function displayValues() {
+function equals() {
+  if (number !== null) {
+    display.textContent = operate(number, display.textContent, operator);
+    number = null;
+  }
+}
+
+function clear() {
+  number = null;
+  display.textContent = "";
+  lastPress = null;
+}
+
+function getValues(e) {
+  switch (e.target.className) {
+    case "numbers":
+      addValues(e.target.textContent);
+      break;
+    case "operators":
+      addOperator(e.target.textContent);
+      break;
+    case "equals":
+      equals();
+      break;
+    case "clear":
+      clear();
+  }
+  lastPress = e.target.textContent;
+}
+
+function listener() {
   const buttons = document.getElementById("buttons");
   buttons.addEventListener("click", getValues);
 }

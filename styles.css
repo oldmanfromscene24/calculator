@@ -1,6 +1,6 @@
 #display {
   border: 1px solid black;
-  width: 500px;
+  width: 550px;
   height: 20px;
   box-sizing: border-box;
 }
@@ -17,8 +17,11 @@
   height: 50px;
 }
 
-#equals,
-#clear {
+#back, #clear {
+  width: 100px;
+}
+
+#equals {
   width: 150px;
 }
 

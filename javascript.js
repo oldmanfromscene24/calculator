@@ -6,24 +6,26 @@ const display = document.getElementById("display");
 listener();
 
 function add(a, b) {
-  return parseInt(a) + parseInt(b);
+  return a + b;
 }
 
 function subtract(a, b) {
-  return parseInt(a) - parseInt(b);
+  return a - b;
 }
 function multiply(a, b) {
-  return parseInt(a) * parseInt(b);
+  return a * b;
 }
 function divide(a, b) {
   if (b == 0) {
     clear();
     return "Divide by Zero";
   }
-  return parseInt(a) / parseInt(b);
+  return a / b;
 }
 
 function operate(a, b, operator) {
+  a = parseFloat(a);
+  b = parseFloat(b);
   switch (operator) {
     case "+":
       return add(a, b);
@@ -37,34 +39,52 @@ function operate(a, b, operator) {
 }
 
 function addValues(value) {
+  if (display.textContent.indexOf(".") !== -1 && value == ".") return;
   if (lastPress === "numbers") display.textContent += value;
+  else if (value == ".") display.textContent = "0.";
   else display.textContent = value;
+  lastPress = "numbers";
 }
 
 function addOperator(addedOperator) {
-  if (display.textContent !== "" && display.textContent!== "Divide by Zero") {
+  if (
+    display.textContent !== "" &&
+    display.textContent !== "Divide by Zero" &&
+    lastPress !== "operators"
+  ) {
     if (number === null) {
       number = display.textContent;
-      display.textContent = addedOperator;
     } else {
       display.textContent = operate(number, display.textContent, operator);
       number = display.textContent;
     }
     operator = addedOperator;
   }
+  lastPress = "operators";
 }
 
-function equals() {
-  if (number !== null && lastPress === "numbers") {
-    display.textContent = operate(number, display.textContent, operator);
-    number = null;
+function back() {
+  if (lastPress === "numbers" || lastPress === "back") {
+    lastPress = "back";
+    if (display.textContent === "0.") display.textContent = "";
+    else display.textContent = display.textContent.slice(0, -1);
   }
 }
 
 function clear() {
+  operator = null;
   number = null;
   display.textContent = "";
   lastPress = null;
+}
+
+function equals() {
+  if (number !== null && lastPress === "numbers" && operator != null) {
+    display.textContent = operate(number, display.textContent, operator);
+    number = null;
+    operator = null;
+    lastPress = null;
+  }
 }
 
 function getValues(e) {
@@ -75,13 +95,15 @@ function getValues(e) {
     case "operators":
       addOperator(e.target.textContent);
       break;
-    case "equals":
-      equals();
+    case "back":
+      back();
       break;
     case "clear":
       clear();
+      break;
+    case "equals":
+      equals();
   }
-  lastPress = e.target.className;
 }
 
 function listener() {

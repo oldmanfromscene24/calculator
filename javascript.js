@@ -92,8 +92,8 @@ function getValues(e) {
   if (e.type === "click") {
     type = e.target.className;
     text = e.target.textContent;
-  } else if ((e.type = "keyup")) {
-    if (e.key >= "0" && e.key <= "9") {
+  } else if (e.type === "keyup") {
+    if ((e.key >= "0" && e.key <= "9") || e.key === ".") {
       type = "numbers";
       text = e.key;
     } else if (["+", "-", "*", "/"].includes(e.key)) {

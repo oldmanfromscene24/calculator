@@ -37,7 +37,7 @@ function operate(a, b, operator) {
 }
 
 function addValues(value) {
-  if ("0" <= lastPress && lastPress <= "9") display.textContent += value;
+  if (lastPress === "numbers") display.textContent += value;
   else display.textContent = value;
 }
 
@@ -55,7 +55,7 @@ function addOperator(addedOperator) {
 }
 
 function equals() {
-  if (number !== null) {
+  if (number !== null && lastPress === "numbers") {
     display.textContent = operate(number, display.textContent, operator);
     number = null;
   }
@@ -81,7 +81,7 @@ function getValues(e) {
     case "clear":
       clear();
   }
-  lastPress = e.target.textContent;
+  lastPress = e.target.className;
 }
 
 function listener() {

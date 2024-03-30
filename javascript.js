@@ -2,7 +2,6 @@ let number = null;
 let operator = null;
 let lastPress = null;
 const display = document.getElementById("display");
-// let displayValue = "";
 listener();
 
 function add(a, b) {
@@ -88,12 +87,28 @@ function equals() {
 }
 
 function getValues(e) {
-  switch (e.target.className) {
+  let type = null;
+  let text = null;
+  if (e.type === "click") {
+    type = e.target.className;
+    text = e.target.textContent;
+  } else if ((e.type = "keyup")) {
+    if (e.key >= "0" && e.key <= "9") {
+      type = "numbers";
+      text = e.key;
+    } else if (["+", "-", "*", "/"].includes(e.key)) {
+      type = "operators";
+      text = e.key;
+    } else if (e.key === "Backspace") type = "back";
+    else if (e.key === "Delete") type = "clear";
+    else if (e.key === "Enter") type = "equals";
+  }
+  switch (type) {
     case "numbers":
-      addValues(e.target.textContent);
+      addValues(text);
       break;
     case "operators":
-      addOperator(e.target.textContent);
+      addOperator(text);
       break;
     case "back":
       back();
@@ -109,4 +124,5 @@ function getValues(e) {
 function listener() {
   const buttons = document.getElementById("buttons");
   buttons.addEventListener("click", getValues);
+  window.addEventListener("keyup", getValues);
 }

@@ -1,8 +1,10 @@
 #display {
   border: 1px solid black;
   width: 550px;
-  height: 20px;
+  height: 30px;
+  font-size: 30px;
   box-sizing: border-box;
+  background-color:lightgreen;
 }
 
 #numbers,
@@ -27,4 +29,42 @@
 
 #buttons {
   width: fit-content;
+}
+
+.numbers, #operators > * {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+.numbers:hover, #operators > *:hover {
+  background-color: aqua;
+  transition: background-color 0,5s;
+}
+
+.container {
+  margin: 0 auto;
+  width: fit-content;
+  border: 1px solid black;
+}
+
+.numbers {
+  background-color: lightcoral
+}
+
+#operators{
+  background-color: bisque;
+}
+
+@keyframes click {
+  0% {
+    background: green;
+  }
+
+}
+
+.numbers:active,  #operators > *:active {
+  animation: click 0.5s forwards;
 }
